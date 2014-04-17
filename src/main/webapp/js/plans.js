@@ -57,7 +57,7 @@ function executePlan(planId) {
 				return;
 			}
 			var posEnd = planData.indexOf("</preservationActionPlan>") + 25;
-			var data = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<job-request xmlsns=\"http://www.scape-project.eu/api/execution\">\n"
+			var data = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<job-request xmlns=\"http://www.scape-project.eu/api/execution\">\n"
 				+ planData.substring(posStart,posEnd) + "\n<plan-id>" + planId + "</plan-id>\n</job-request>";
 			console.log(data);
 			$.ajax({
@@ -66,6 +66,8 @@ function executePlan(planId) {
 				data: data,
 				dataType: "xml",
 				contentType: "application/xml",
+				username: "taverna",
+				password: "taverna",
 				success: function (data, stText, xhr) {
 					if (xhr.status != 200) {
 						alert(xhr);
@@ -78,6 +80,7 @@ function executePlan(planId) {
 				}
 				
 			});
+			/** What does this code do? Isn't it the the previous version of the above post?
 			$.post(pmw_config.pmw_runplan_uri)
 				.done(function (data, stText, xhr) {
 					if (xhr.status != 200) {
@@ -90,6 +93,7 @@ function executePlan(planId) {
 					alert('An error occured while trying to POST data to \n' + pmw_config.pmw_runplan_uri + 
 							'.\n\n' + xhr.statusText + " [" + xhr.status + ']\n\nPlease make sure that the settings in \'config.js\' are correct');
 				});
+			*/
 		}, "text");
 }
 
